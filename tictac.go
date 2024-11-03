@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 func turn(board [][]string, player string) {
     fmt.Println("Player", player)
@@ -8,14 +12,39 @@ func turn(board [][]string, player string) {
         fmt.Println(board[i])
     }
     fmt.Println("Enter row and column (0, 1, or 2):")
+
     var row, col int
-    fmt.Scan(&row, &col)
-    if board[row][col] == "_" {
-        board[row][col] = player
-    } else {
-        fmt.Println("Cell already occupied, try again.")
-        turn(board, player)
+    for {
+        var input string
+        fmt.Scanln(&input)
+        parts := strings.Split(input, " ")
+        if len(parts) != 2 {
+            fmt.Println("Invalid input. Please enter row and column separated by a space.")
+            continue
+        }
+
+        var err error
+        row, err = strconv.Atoi(parts[0])
+        if err != nil || row < 0 || row > 2 {
+            fmt.Println("Invalid row. Please enter a number between 0 and 2.")
+            continue
+        }
+
+        col, err = strconv.Atoi(parts[1])
+        if err != nil || col < 0 || col > 2 {
+            fmt.Println("Invalid column. Please enter a number between 0 and 2.")
+            continue
+        }
+
+        if board[row][col] != "_" {
+            fmt.Println("Cell already occupied, try again.")
+            continue
+        }
+
+        break
     }
+
+    board[row][col] = player
 }
 
 func checkWin(board [][]string, player string) bool {
