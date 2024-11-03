@@ -1,6 +1,6 @@
-#Tic-tac-go
+# Tic-tac-go
 
-##"Helgo, world"
+## "Helgo, world"
 
 This is a simple tic-tac-toe clone, built in go, to get a basic understanding of the language.
 
